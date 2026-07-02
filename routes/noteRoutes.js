@@ -10,6 +10,7 @@ router.post('/notes', noteController.createNote);
 router.get('/notes', noteController.getAllNotes);
 router.get('/notes/:id', noteController.getNoteById);
 router.put('/notes/:id', noteController.updateNote);
+router.patch('/notes/:id', noteController.patchNote);
 router.delete('/notes/:id', noteController.deleteNote);
 
 module.exports = router;
