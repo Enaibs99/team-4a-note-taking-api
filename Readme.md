@@ -1,69 +1,107 @@
-This is a RESTful CRUD Note taking API built with Node.js and Express.
+# Note-Taking API
 
-Functionalities provided within this API included:
+A simple RESTful API for creating, reading, updating, and deleting notes. Built with Node.js and Express, using an in-memory data store (no database required).
 
-GET note   '/'
-POST note  '/notes'
-PUT note   '/notes/:id'
-DELETE note '/notes/:id'
+## Features
 
-The Routes to this requests are in the /routes/noteRoutes.js
+- Full CRUD support for notes
+- In-memory storage (data resets on server restart)
+- UUID-based note IDs
+- JSON request/response format
 
-The business logic are in the /controllers/noteController.js
+## Tech Stack
 
-Project Structure
-project/
-│── controllers/
-│   └── controller.js
-│── routes/
-│   └── noteRoutes.js
-│── config/
-│── server.js
-│── package.json
-│── README.md
+- **Node.js**
+- **Express.js**
+- **uuid** – for generating unique note IDs
 
-Installation
-Clone the repository using: 
-git clone [http link]
+## Project Structure
 
-Navigate into the project folder using:
-cd your-repository
-Install dependencies using:
+```
+.
+├── controllers/
+│   └── noteController.js   # Business logic for notes
+├── routes/
+│   └── noteRoutes.js       # Route definitions
+├── server.js                # App entry point
+└── README.md
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js installed (v18+ recommended)
+
+### Installation
+
+```bash
+git clone <your-repo-url>
+cd note-taking-api
 npm install
+```
 
-Start the server
-npm start
+### Running the Server
 
-or
+```bash
+node server.js
+```
 
-npm run dev
 
-Create
-POST /notes
-Content-Type: application/json
+## API Endpoints
 
+| Method | Endpoint       | Description                  |
+|--------|----------------|-------------------------------|
+| GET    | `/`            | Welcome message + endpoint list |
+| GET    | `/notes`       | Get all notes                |
+| GET    | `/notes/:id`   | Get a single note by ID      |
+| POST   | `/notes`       | Create a new note            |
+| PUT    | `/notes/:id`   | Fully update a note          |
+| PATCH  | `/notes/:id`   | Partially update a note      |
+| DELETE | `/notes/:id`   | Delete a note                |
+
+### Request Body (POST / PUT / PATCH)
+
+```json
 {
-  "title": "All Lives matter",
-  "content": "Let the poor man breathe!" 
+  "title": "New Update Launch Checklist",
+  "content": "Run tests, deploy to production, and hopefully secure a well placed internship!"
 }
-Response
+```
+
+> `title` and `content` are both required when creating a note (`POST /notes`).
+
+### Example Responses
+
+**POST /notes** → `201 Created`
+```json
 {
-  "id": "td_dejejee",
-  "title": "All lives matter",
-  "content":"Let the poor man breathe!",
-  "dateCreated": 26-06-2026
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "New Update Launch Checklist",
+  "content": "Run tests, deploy to production, and hopefully secure a well placed internship!",
+  "createdAt": "2026-07-02T10:00:00.000Z"
 }
+```
 
-Error Handling
+**GET /notes/:id** → `404 Not Found` (if note doesn't exist)
+```json
+{
+  "error": "Note not found"
+}
+```
 
-The API returns appropriate HTTP status codes:
+**DELETE /notes/:id** → `204 No Content`
 
-200 – Success
-201 – Resource created
-400 – Bad request
-404 – Resource not found
-500 – Internal server error
+## Error Handling
 
-Author
-All Group 4A members
+- Returns `400 Bad Request` if `title` or `content` is missing on note creation.
+- Returns `404 Not Found` for unknown routes or missing notes.
 
+## Notes / Limitations
+
+- Data is stored in memory and will be lost when the server restarts.
+- No authentication or persistence layer is included — intended for learning/demo purposes.
+
+## License
+
+ISC
