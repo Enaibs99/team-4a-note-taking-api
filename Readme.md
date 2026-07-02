@@ -105,3 +105,14 @@ node server.js
 ## License
 
 ISC
+
+## API TESTING
+ 
+ The API can be tested using:
+
+ - Postman 
+
+ Postman Collection Documentation URL for Note-Taking API
+ https://documenter.getpostman.com/view/47273374/2sBY4HT3Ub
+
+ ---
